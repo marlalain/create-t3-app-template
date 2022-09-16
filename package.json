@@ -12,6 +12,12 @@
     "next-auth": "^4.10.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "@tanstack/react-query": "^4.2.3",
+    "@trpc/client": "10.0.0-proxy-alpha.70",
+    "@trpc/next": "10.0.0-proxy-alpha.70",
+    "@trpc/react": "10.0.0-proxy-alpha.70",
+    "@trpc/server": "10.0.0-proxy-alpha.70",
+    "superjson": "^1.9.1",
     "zod": "^3.18.0"
   },
   "devDependencies": {
