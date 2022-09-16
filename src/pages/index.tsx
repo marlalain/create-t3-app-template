@@ -1,8 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { trpc } from "../utils/trpc";
 import styles from "./index.module.css";
 
 const Home: NextPage = () => {
+  const { data } = trpc.example.hello.useQuery({ text: "from tRPC" });
+
   return (
     <>
       <Head>
@@ -48,6 +51,10 @@ const Home: NextPage = () => {
               description="Build data-driven JavaScript & TypeScript apps in less time"
               documentation="https://www.prisma.io/docs/"
             />
+          </div>
+
+          <div className={styles.helloFrom}>
+            {data ? <p>{data.greeting}</p> : <p>Loading...</p>}
           </div>
         </div>
       </div>
