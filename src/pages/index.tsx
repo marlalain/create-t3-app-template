@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { trpc } from "../utils/trpc";
+import { signIn, signOut, useSession } from "next-auth/react";
 import styles from "./index.module.css";
 
 const Home: NextPage = () => {
@@ -52,10 +53,10 @@ const Home: NextPage = () => {
               documentation="https://www.prisma.io/docs/"
             />
           </div>
-
           <div className={styles.helloFrom}>
             {data ? <p>{data.greeting}</p> : <p>Loading...</p>}
           </div>
+          <AuthShowcase />
         </div>
       </div>
     </>
@@ -63,6 +64,25 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+const AuthShowcase: React.FC = () => {
+  const { data: secretMessage } = trpc.auth.getSecretMessage.useQuery();
+
+  const { data: sessionData } = useSession();
+
+  return (
+    <div className={styles.authShowcase}>
+      {sessionData && <p>Logged in as {sessionData?.user?.name}</p>}
+      {secretMessage && <p>{secretMessage}</p>}
+      <button
+        className={styles.signInButton}
+        onClick={sessionData ? () => signOut() : () => signIn()}
+      >
+        {sessionData ? "Sign out" : "Sign in"}
+      </button>
+    </div>
+  );
+};
 
 type TechnologyCardProps = {
   name: string;
